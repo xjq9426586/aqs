@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/springdata?useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+  mvc: #加载thymeleaf后这个配置无效
+    view:
+      prefix: /pages/ #视图路径
+      suffix: .html #视图后缀名
+  #上传文件大小
+  servlet:
+    multipart:
+      max-file-size: 100Mb
+      max-request-size: 100Mb
+      
+  logging:
+    config: classpath:logback-spring.xml
+    
+  thymeleaf:
+    prefix: classpath:/static/pages/ #如果没有配置，thymeleaf默认页面放在templates下
+    
+  swagger: #配置swagger是否开启
+    enable: true
+    
+resourceLocations:
+  uploadPath: D:/uploaded_files/ #文件上传路径
+resourceHandler:
+  pathHandler: /files/ #文件访问映射路径
+  
