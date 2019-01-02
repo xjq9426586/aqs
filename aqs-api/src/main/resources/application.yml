@@ -18,7 +18,7 @@ spring:
     multipart:
       max-file-size: 100Mb
       max-request-size: 100Mb
-      
+  #logback配置    
   logging:
     config: classpath:logback-spring.xml
     

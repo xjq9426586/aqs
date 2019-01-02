@@ -28,7 +28,7 @@ public class GlobalErrorController implements ErrorController {
 
     /**
      * 错误信息页的路径
-     * 加./页面路径为aqs-api模块下的error页面
+     * 
      */
     private final static String DEFAULT_ERROR_VIEW = "error";
 

@@ -87,20 +87,6 @@
 					<fork>true</fork>
 				</configuration>
 			</plugin>
-			<!-- tomcat远程部署war插件 -->
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<!-- 远程tomcat ip port -->
-					<url>http://127.0.0.1:8080/manager/text</url>
-					<username>admin</username>
-					<password>password</password>
-					<update>true</update>
-					<path>/webapp</path>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 
