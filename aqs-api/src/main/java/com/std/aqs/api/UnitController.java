@@ -2,6 +2,8 @@ package com.std.aqs.api;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +31,7 @@ public class UnitController {
 	
 	@ApiOperation("获取单位列表")  
 	@GetMapping("list")
-	public ResultBean<Unit> list(){
+	public ResultBean<List<Unit>> list(){
 		log.info("获取list");
 		return ResultBean.isOk(1).data(unitService.list());
 	}
