@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("unchecked")
 public class QuartzUtil {
 	//加入Qulifier注解，通过名称注入bean
-	@Autowired @Qualifier("Scheduler")
+	@Autowired 
+	@Qualifier("Scheduler")
 	private Scheduler scheduler;
 	
 	public void addJob(Class<?> jobClass, String jobName, String jobGroup, String cronExpression) throws SchedulerException {

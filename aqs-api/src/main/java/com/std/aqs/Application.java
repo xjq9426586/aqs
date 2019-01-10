@@ -31,7 +31,7 @@ public class Application extends SpringBootServletInitializer {
 	@Bean
 	public CommandLineRunner commandLineRunner() throws SchedulerException {
 		return args -> {
-			quartzUtil.addJob(startJob.class, "startJob", "startJob", "0 56 10 * * ?");
+			quartzUtil.addJob(startJob.class, "startJob", "startJob", "0 0/1 * * * ? ");
 		};
 
 	}
