@@ -11,11 +11,5 @@ import com.std.aqs.repository.UserRepository;
 @Service
 @Transactional
 public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements UserService{
-	@Autowired
-	private UserRepository userRepository;
-	@Override
-	public User getUser(int id) {
-		return userRepository.getOne(id);
-	}
-	
+
 }

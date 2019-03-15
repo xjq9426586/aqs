@@ -36,10 +36,8 @@ public class UserController {
 	@GetMapping("/get/{id}")
 	@ApiOperation(value="用户查询(ID)")	
 	@Cacheable(value="just",key="#id")
-	public User  getUser(@PathVariable("id") int id){
+	public ResultBean<User> getUser(@PathVariable("id") int id){
         Optional<User> user = userService.getEntity(id);
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("data", user.get());
-        return userService.getUser(id);
+        return ResultBean.isOk(1).data(user.get());
 	}
 }
