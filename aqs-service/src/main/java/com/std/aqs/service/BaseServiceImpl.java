@@ -1,6 +1,7 @@
 package com.std.aqs.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -20,5 +21,11 @@ public class BaseServiceImpl<T,ID> implements BaseService<T,ID>{
 	public List<T> list() {
 		
 		return j.findAll();
+	}
+	
+	@Override
+	public Optional<T> getEntity(ID id) {
+		
+		return j.findById(id);
 	}
 }

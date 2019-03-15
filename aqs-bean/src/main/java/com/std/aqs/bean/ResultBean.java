@@ -1,5 +1,7 @@
 package com.std.aqs.bean;
 
+import java.io.Serializable;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -11,7 +13,12 @@ import lombok.Data;
  */
 @Data
 @SuppressWarnings("rawtypes")
-public class ResultBean<T> {
+public class ResultBean<T> implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@ApiModelProperty("状态0失败1成功")
 	private int status;
 

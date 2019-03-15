@@ -1,15 +1,19 @@
 package com.std.aqs.api;
 
-import org.quartz.SchedulerException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.std.aqs.bean.ResultBean;
-import com.std.aqs.common.util.QuartzUtil;
 import com.std.aqs.entity.User;
 import com.std.aqs.service.UserService;
 
@@ -19,12 +23,9 @@ import io.swagger.annotations.ApiOperation;
 @Api("用户信息管理")
 @RestController
 @RequestMapping("/api/user/*")
-@SuppressWarnings("unchecked")
 public class UserController {
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private QuartzUtil quartzUtil;
 	
 	@ApiOperation("新增用户")
 	@PostMapping("save")
@@ -32,12 +33,13 @@ public class UserController {
 		return ResultBean.isOk(1).data(userService.save(user));
 	}
 	
-	@GetMapping("test")
-	public void test() {
-		try {
-			quartzUtil.removeJob("startJob", "startJob");
-		} catch (SchedulerException e) {
-			e.printStackTrace();
-		}
+	@GetMapping("/get/{id}")
+	@ApiOperation(value="用户查询(ID)")	
+	@Cacheable(value="just",key="#id")
+	public User  getUser(@PathVariable("id") int id){
+        Optional<User> user = userService.getEntity(id);
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("data", user.get());
+        return userService.getUser(id);
 	}
 }
