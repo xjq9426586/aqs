@@ -1,6 +1,8 @@
 package com.std.aqs.common.config;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -20,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 
 @Configuration
@@ -30,13 +33,41 @@ public class RedisConfig extends CachingConfigurerSupport {
      */
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
-        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofHours(1))// 设置缓存有效期一小时
-                .serializeValuesWith(RedisSerializationContext
-                        .SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));//列化方法
-        return RedisCacheManager
-                .builder(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory))
-                .cacheDefaults(redisCacheConfiguration).build();
+        return new RedisCacheManager(
+                RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
+                // 默认策略，未配置的 key 会使用这个
+                this.getRedisCacheConfigurationWithTtl(Duration.ofSeconds(120)),
+
+                // 指定 key 策略
+                this.getRedisCacheConfigurationMap()
+        );
+
+    }
+
+    /**
+     * 配置key缓存失效策略
+     * @return
+     */
+    private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
+        Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
+        redisCacheConfigurationMap.put("test", this.getRedisCacheConfigurationWithTtl(Duration.ofSeconds(60)));
+        return redisCacheConfigurationMap;
+    }
+
+    /**
+     * 缓存策略
+     * @param duration
+     * @return
+     */
+    private RedisCacheConfiguration getRedisCacheConfigurationWithTtl(Duration duration) {
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
+        redisCacheConfiguration = redisCacheConfiguration.serializeValuesWith(
+                RedisSerializationContext
+                        .SerializationPair
+                        .fromSerializer(this.redisSerializer())
+        ).entryTtl(duration);
+
+        return redisCacheConfiguration;
     }
 
     /**
@@ -48,16 +79,23 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean(name = "redisTemplate")
     public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
         StringRedisTemplate template = new StringRedisTemplate(factory);
+        //序列化 值时使用此序列化方法
+        template.setValueSerializer(this.redisSerializer());
+        template.afterPropertiesSet();
+        return template;
+    }
+
+    /**
+     * 序列化
+     * @return
+     */
+    private Jackson2JsonRedisSerializer<Object> redisSerializer(){
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(
                 Object.class);
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
-        //序列化 值时使用此序列化方法
-        template.setValueSerializer(jackson2JsonRedisSerializer);
-        template.afterPropertiesSet();
-        return template;
+        return jackson2JsonRedisSerializer;
     }
-
 }
