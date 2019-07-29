@@ -3,6 +3,9 @@ package com.std.aqs.api;
 import java.io.File;
 import java.io.IOException;
 
+import com.std.aqs.entity.FileInfo;
+import com.std.aqs.service.FileInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +26,9 @@ public class FileController {
 	private String uploadPath;
 	@Value("${resourceHandler.pathHandler}")
 	private String pathHandler;
-	
+	@Autowired
+	private FileInfoService fileInfoService;
+
 	@SuppressWarnings("unchecked")
 	@ApiImplicitParam(name = "file",value = "文件",dataType = "MultipartFile")
 	@PostMapping("upload")
@@ -40,7 +45,7 @@ public class FileController {
 				taget.createNewFile();
 			}
 			file.transferTo(taget);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
