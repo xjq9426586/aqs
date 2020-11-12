@@ -19,18 +19,18 @@ public class ResultBean<T> implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@ApiModelProperty("返回消息")
+	private String message;
+
 	@ApiModelProperty("状态0失败1成功")
 	private int status;
 
-	@ApiModelProperty("返回消息")
-	private String message;
-	
 	@ApiModelProperty("数据")
 	private T data;
 	
 	@ApiModelProperty("错误信息")
 	private ErrorInfo error;
-	
+
 	
 	//APIS
 	public static ResultBean isOk(int isOk) {

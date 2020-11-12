@@ -1,5 +1,7 @@
 package com.std.aqs.common.config;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -30,7 +32,8 @@ public class Swagger2Config {
                         .version("版本号:1.0")
                         .build())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.std.aqs.api"))
+                //.apis(RequestHandlerSelectors.basePackage("com.std.aqs.api"))
+                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
                 .paths(PathSelectors.any())
                 .build();
     }
