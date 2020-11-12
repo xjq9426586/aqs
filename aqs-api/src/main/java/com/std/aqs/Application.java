@@ -11,10 +11,11 @@ import org.springframework.context.annotation.Bean;
 
 import com.std.aqs.common.job.startJob;
 import com.std.aqs.common.util.QuartzUtil;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
- * 注：为了避免扫描路径不一致，启动类放在Root Package 即 com.std.aqs 打包成war包,需要继承
- * org.springframework.boot.context.web.SpringBootServletInitializer类,
+ * 注：为了避免扫描路径不一致，启动类放在Root Package 即 com.std.aqs
+ * 打包成war包,需要继承org.springframework.boot.context.web.SpringBootServletInitializer类,
  * 覆盖其configure(SpringApplicationBuilder)方法
  */
 
@@ -22,6 +23,9 @@ import com.std.aqs.common.util.QuartzUtil;
 public class Application extends SpringBootServletInitializer {
 	@Autowired
 	private QuartzUtil quartzUtil;
+
+	@Autowired
+	ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
@@ -32,6 +36,9 @@ public class Application extends SpringBootServletInitializer {
 	@Bean
 	public CommandLineRunner commandLineRunner() throws SchedulerException {
 		return args -> {
+			threadPoolTaskExecutor.execute(() -> {
+				System.out.println("-------------------------------------");
+			});
 			quartzUtil.addJob(startJob.class, "startJob", "startJob", "0 0/1 * * * ? ");
 		};
 
