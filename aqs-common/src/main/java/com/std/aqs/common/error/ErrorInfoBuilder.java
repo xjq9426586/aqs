@@ -74,17 +74,20 @@ public class ErrorInfoBuilder implements HandlerExceptionResolver, Ordered {
 
         return getErrorInfo(request, getError(request));
     }
+
     /**
      * 构建错误信息.(ResultBean)
+     *
      * @param <T>
      * @param request
      * @return
      */
     @SuppressWarnings("unchecked")
-	public <T> ResultBean<T> getResult(HttpServletRequest request){
-		return ResultBean.isOk(0).error(getErrorInfo(request, getError(request)));
-    	
+    public <T> ResultBean<T> getResult(HttpServletRequest request) {
+        return ResultBean.isOk(0).error(getErrorInfo(request, getError(request)));
+
     }
+
     /**
      * 构建错误信息.(ErrorInfo)
      */

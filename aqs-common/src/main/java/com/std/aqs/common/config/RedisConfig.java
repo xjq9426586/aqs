@@ -46,6 +46,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     /**
      * 配置key缓存失效策略
+     *
      * @return
      */
     private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
@@ -56,6 +57,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     /**
      * 缓存策略
+     *
      * @param duration
      * @return
      */
@@ -87,9 +89,10 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     /**
      * 序列化
+     *
      * @return
      */
-    private Jackson2JsonRedisSerializer<Object> redisSerializer(){
+    private Jackson2JsonRedisSerializer<Object> redisSerializer() {
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(
                 Object.class);
         ObjectMapper om = new ObjectMapper();

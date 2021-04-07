@@ -14,23 +14,23 @@ import lombok.Data;
 
 @Data
 @Entity
-public class User implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
     @GeneratedValue
     @ApiModelProperty("id")
-	private int id;
-	
-	@Column(nullable = false, unique = true)
-	@ApiModelProperty("用户名")
-	private String name;
-	
-	@Column(nullable = false)
-	@ApiModelProperty("密码")
-	private String password;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@ApiModelProperty("单位")
-	private Unit unit;
+    private int id;
+
+    @Column(nullable = false, unique = true)
+    @ApiModelProperty("用户名")
+    private String name;
+
+    @Column(nullable = false)
+    @ApiModelProperty("密码")
+    private String password;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @ApiModelProperty("单位")
+    private Unit unit;
 }

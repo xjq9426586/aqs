@@ -12,14 +12,14 @@ import com.std.aqs.entity.Unit;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class test {
-	@Autowired
-	private UnitRepository unitRepository;
-	
-	
-	@Test
-	public void test1() {
-		Unit u = new Unit();
-		u.setUnitName("单位");
-		unitRepository.save(u);
-	}
+    @Autowired
+    private UnitRepository unitRepository;
+
+
+    @Test
+    public void test1() {
+        Unit u = new Unit();
+        u.setUnitName("单位");
+        unitRepository.save(u);
+    }
 }

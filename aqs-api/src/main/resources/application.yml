@@ -36,13 +36,13 @@ spring:
   #logback配置    
   logging:
     config: classpath:logback-spring.xml
-    
+
   thymeleaf:
     prefix: classpath:/static/pages/ #如果没有配置，thymeleaf默认页面放在templates下
-    
+
   swagger: #配置swagger是否开启
     enable: true
-    
+
 resourceLocations:
   uploadPath: D:/uploaded_files/ #文件上传路径
 resourceHandler:

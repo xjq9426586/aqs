@@ -7,5 +7,5 @@ import com.std.aqs.entity.FileInfo;
  * @Date: 2019/7/29 0029 16:16
  * @Description:
  */
-public interface FileInfoService extends BaseService<FileInfo, Integer>{
+public interface FileInfoService extends BaseService<FileInfo, Integer> {
 }

@@ -7,56 +7,59 @@ import lombok.Data;
 
 /**
  * 统一返回结果bean
- * @author Schaw
  *
  * @param <T>
+ * @author Schaw
  */
 @Data
 @SuppressWarnings("rawtypes")
-public class ResultBean<T> implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class ResultBean<T> implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	@ApiModelProperty("返回消息")
-	private String message;
+    @ApiModelProperty("返回消息")
+    private String message;
 
-	@ApiModelProperty("状态0失败1成功")
-	private int status;
+    @ApiModelProperty("状态0失败1成功")
+    private int status;
 
-	@ApiModelProperty("数据")
-	private T data;
-	
-	@ApiModelProperty("错误信息")
-	private ErrorInfo error;
+    @ApiModelProperty("数据")
+    private T data;
 
-	
-	//APIS
-	public static ResultBean isOk(int isOk) {
-    	ResultBean r = new ResultBean();
-    	r.setStatus(isOk);
-    	if(isOk == 0) {
-    		r.setMessage("调用接口失败");
-    	}else {
-    		r.setMessage("调用接口成功");
-    	}
+    @ApiModelProperty("错误信息")
+    private ErrorInfo error;
+
+
+    //APIS
+    public static ResultBean isOk(int isOk) {
+        ResultBean r = new ResultBean();
+        r.setStatus(isOk);
+        if (isOk == 0) {
+            r.setMessage("调用接口失败");
+        } else {
+            r.setMessage("调用接口成功");
+        }
         return r;
     }
-    public static ResultBean isOk(int isOk,String msg) {
-    	ResultBean r = new ResultBean();
-    	r.setStatus(isOk);
-    	r.setMessage(msg);
+
+    public static ResultBean isOk(int isOk, String msg) {
+        ResultBean r = new ResultBean();
+        r.setStatus(isOk);
+        r.setMessage(msg);
         return r;
     }
+
     public ResultBean<T> data(T data) {
-    	this.setData(data);
-		return this;
-    	
+        this.setData(data);
+        return this;
+
     }
+
     public ResultBean<T> error(ErrorInfo e) {
-    	this.setError(e);
-		return this;
+        this.setError(e);
+        return this;
     }
-   
+
 }

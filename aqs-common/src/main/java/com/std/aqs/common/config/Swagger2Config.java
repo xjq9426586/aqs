@@ -11,9 +11,9 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 /**
  * 主要用途：开启在线接口文档和添加相关配置
- *
  */
 
 @Configuration
@@ -28,7 +28,7 @@ public class Swagger2Config {
                 .apiInfo(new ApiInfoBuilder()
                         .title("接口文档")
                         .description("描述：具体包括XXX,XXX模块...")
-                        .contact(new Contact("just we",null,null))
+                        .contact(new Contact("just we", null, null))
                         .version("版本号:1.0")
                         .build())
                 .select()

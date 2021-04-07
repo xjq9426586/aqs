@@ -12,13 +12,13 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Unit implements Serializable{
-	private static final long serialVersionUID = 1L;
-	@Id
+public class Unit implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
     @GeneratedValue
     @ApiModelProperty("id")
-	private int id;
-	@Column(nullable = false, unique = true)
-	@ApiModelProperty("单位名称")
-	private String unitName;
+    private int id;
+    @Column(nullable = false, unique = true)
+    @ApiModelProperty("单位名称")
+    private String unitName;
 }

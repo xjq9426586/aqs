@@ -9,12 +9,12 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @Configuration
 public class ThreadPoolConfig {
 
-	/**
-	 * 配置线程池
-	 * 
-	 * @return
-	 */
-	@Bean(name = "asyncPoolTaskExecutor")
+    /**
+     * 配置线程池
+     *
+     * @return
+     */
+    @Bean(name = "asyncPoolTaskExecutor")
     public ThreadPoolTaskExecutor getAsyncThreadPoolTaskExecutor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setCorePoolSize(20);

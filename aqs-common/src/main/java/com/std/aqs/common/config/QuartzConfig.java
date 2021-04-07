@@ -11,27 +11,27 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 @Configuration
 public class QuartzConfig {
 
-	@Bean(name = "SchedulerFactory")
-	public SchedulerFactoryBean schedulerFactoryBean() throws IOException {
-		SchedulerFactoryBean factory = new SchedulerFactoryBean();
-		// factory.setQuartzProperties(quartzProperties());
-		return factory;
-	}
+    @Bean(name = "SchedulerFactory")
+    public SchedulerFactoryBean schedulerFactoryBean() throws IOException {
+        SchedulerFactoryBean factory = new SchedulerFactoryBean();
+        // factory.setQuartzProperties(quartzProperties());
+        return factory;
+    }
 
-	/*
-	 * quartz初始化监听器
-	 */
-	@Bean
-	public QuartzInitializerListener executorListener() {
-		return new QuartzInitializerListener();
-	}
+    /*
+     * quartz初始化监听器
+     */
+    @Bean
+    public QuartzInitializerListener executorListener() {
+        return new QuartzInitializerListener();
+    }
 
-	/*
-	 * 通过SchedulerFactoryBean获取Scheduler的实例
-	 */
-	@Bean(name = "Scheduler")
-	public Scheduler scheduler() throws IOException {
-		return schedulerFactoryBean().getScheduler();
-	}
+    /*
+     * 通过SchedulerFactoryBean获取Scheduler的实例
+     */
+    @Bean(name = "Scheduler")
+    public Scheduler scheduler() throws IOException {
+        return schedulerFactoryBean().getScheduler();
+    }
 
 }

@@ -24,20 +24,20 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api/user/*")
 public class UserController {
-	@Autowired
-	private UserService userService;
-	
-	@ApiOperation("新增用户")
-	@PostMapping("save")
-	public ResultBean<Integer> save(@RequestBody User user) {
-		return ResultBean.isOk(1).data(userService.save(user));
-	}
-	
-	@GetMapping("/get/{id}")      
-	@ApiOperation(value="用户查询(ID)")	
-	@Cacheable(value="test1",key="#id")
-	public ResultBean<User> getUser(@PathVariable("id") int id){
+    @Autowired
+    private UserService userService;
+
+    @ApiOperation("新增用户")
+    @PostMapping("save")
+    public ResultBean<Integer> save(@RequestBody User user) {
+        return ResultBean.isOk(1).data(userService.testGet(3, user));
+    }
+
+    @GetMapping("/get/{id}")
+    @ApiOperation(value = "用户查询(ID)")
+    @Cacheable(value = "test1", key = "#id")
+    public ResultBean<User> getUser(@PathVariable("id") int id) {
         Optional<User> user = userService.getEntity(id);
         return ResultBean.isOk(1).data(user.get());
-	}
+    }
 }

@@ -15,7 +15,6 @@ import com.std.aqs.bean.ResultBean;
 
 /**
  * 主要用途：统一处理错误/异常(针对控制层)
- *
  */
 @RestController
 @RequestMapping("${server.error.path:/error}")
@@ -29,7 +28,6 @@ public class GlobalErrorController implements ErrorController {
 
     /**
      * 错误信息页的路径
-     * 
      */
     private final static String DEFAULT_ERROR_VIEW = "errorView";
 
@@ -51,6 +49,7 @@ public class GlobalErrorController implements ErrorController {
 
     /**
      * 情况2：其它预期类型 则返回详细的错误信息(JSON).
+     *
      * @param <T>
      */
     @RequestMapping

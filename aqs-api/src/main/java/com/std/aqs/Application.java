@@ -21,31 +21,31 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
-	@Autowired
-	private QuartzUtil quartzUtil;
+    @Autowired
+    private QuartzUtil quartzUtil;
 
-	@Autowired
-	ThreadPoolTaskExecutor threadPoolTaskExecutor;
+    @Autowired
+    ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(Application.class);
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(Application.class);
 
-	}
+    }
 
-	@Bean
-	public CommandLineRunner commandLineRunner() throws SchedulerException {
-		return args -> {
-			threadPoolTaskExecutor.execute(() -> {
-				System.out.println("-------------------------------------");
-			});
-			quartzUtil.addJob(startJob.class, "startJob", "startJob", "0 0/1 * * * ? ");
-		};
+    @Bean
+    public CommandLineRunner commandLineRunner() throws SchedulerException {
+        return args -> {
+            threadPoolTaskExecutor.execute(() -> {
+                System.out.println("-------------------------------------");
+            });
+            quartzUtil.addJob(startJob.class, "startJob", "startJob", "0 0/1 * * * ? ");
+        };
 
-	}
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 
 }

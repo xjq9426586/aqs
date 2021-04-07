@@ -14,52 +14,54 @@ import java.util.List;
 
 /**
  * 资源映射路径映射congfig
- * @author Schaw
  *
+ * @author Schaw
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-	@Value("${resourceLocations.uploadPath}")
-	private String uploadPath;
-	@Value("${resourceHandler.pathHandler}")
-	private String pathHandler;
+    @Value("${resourceLocations.uploadPath}")
+    private String uploadPath;
+    @Value("${resourceHandler.pathHandler}")
+    private String pathHandler;
 
 
-	@Bean
-	public CurrentUserInterceptor currentUserInterceptor(){
-		return new CurrentUserInterceptor();
-	}
+    @Bean
+    public CurrentUserInterceptor currentUserInterceptor() {
+        return new CurrentUserInterceptor();
+    }
 
-	@Bean
-	public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver(){
-		return new CurrentUserMethodArgumentResolver();
-	}
+    @Bean
+    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
+        return new CurrentUserMethodArgumentResolver();
+    }
 
-	/**
-	 * 添加参数解析器
-	 * @param argumentResolvers
-	 */
-	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-		argumentResolvers.add(this.currentUserMethodArgumentResolver());
-	}
+    /**
+     * 添加参数解析器
+     *
+     * @param argumentResolvers
+     */
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(this.currentUserMethodArgumentResolver());
+    }
 
-	/**
-	 * 添加拦截器
-	 * @param registry
-	 */
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(this.currentUserInterceptor())
-				.addPathPatterns("/**")
-				.excludePathPatterns("/login");
-	}
+    /**
+     * 添加拦截器
+     *
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(this.currentUserInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login");
+    }
 
     @Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    	/*
-    	 * swagger资源映射路径映射
-    	 */
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        /*
+         * swagger资源映射路径映射
+         */
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
@@ -68,10 +70,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
          * 文件资源路径映射
          */
         registry.addResourceHandler(pathHandler + "**")
-        		.addResourceLocations("file:///"+uploadPath);
+                .addResourceLocations("file:///" + uploadPath);
 
-		registry.addResourceHandler("/static/**")
-				.addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
     }
 
 
