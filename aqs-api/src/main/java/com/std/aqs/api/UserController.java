@@ -30,7 +30,7 @@ public class UserController {
     @ApiOperation("新增用户")
     @PostMapping("save")
     public ResultBean<Integer> save(@RequestBody User user) {
-        return ResultBean.isOk(1).data(userService.testGet(3, user));
+        return ResultBean.isOk(1).data(userService.save(user));
     }
 
     @GetMapping("/get/{id}")
