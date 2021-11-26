@@ -9,3 +9,9 @@ idea/
 out
 gen
 /.idea/
+aqs-api/target/
+aqs-bean/target/
+aqs-common/target/
+aqs-repository/src/main/resources/
+aqs-repository/target/
+aqs-service/target/

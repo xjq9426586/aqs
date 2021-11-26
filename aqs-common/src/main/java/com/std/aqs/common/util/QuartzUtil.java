@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 @SuppressWarnings("unchecked")
 public class QuartzUtil {
@@ -29,11 +31,13 @@ public class QuartzUtil {
      * @param jobName        任务名
      * @param jobGroup       任务组
      * @param cronExpression cron表达式
+     * @param params 参数
      * @throws SchedulerException
      */
-    public void addJob(Class<?> jobClass, String jobName, String jobGroup, String cronExpression) throws SchedulerException {
+    public void addJob(Class<?> jobClass, Map<String, Object> params, String jobName, String jobGroup, String cronExpression) throws SchedulerException {
         //构建job信息
         JobDetail jobDetail = JobBuilder.newJob((Class<? extends Job>) jobClass).withIdentity(jobName, jobGroup).build();
+        jobDetail.getJobDataMap().putAll(params);
 
         //表达式调度构建器(即任务执行的时间)
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
@@ -71,9 +75,10 @@ public class QuartzUtil {
      * @param jobName
      * @param jobGroup
      * @param cronExpression
+     * @param params 参数
      * @throws SchedulerException
      */
-    public void resetJob(String jobName, String jobGroup, String cronExpression) throws SchedulerException {
+    public void resetJob(Map<String, Object> params, String jobName, String jobGroup, String cronExpression) throws SchedulerException {
         TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
 
         // 表达式调度构建器
@@ -81,9 +86,9 @@ public class QuartzUtil {
 
         CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
 
-        // 按新的cronExpression表达式重新构建trigger
+        // 按新的cronExpression表达式重新构建trigger、
         trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
-
+        trigger.getJobDataMap().putAll(params);
         // 按新的trigger重新设置job执行
         scheduler.rescheduleJob(triggerKey, trigger);
     }

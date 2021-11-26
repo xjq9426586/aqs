@@ -3,6 +3,8 @@ server:
 #  servlet:
 #    context-path: /aqs
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
   datasource:
     url: jdbc:mysql://localhost:3306/springdata?useUnicode=true&amp;characterEncoding=utf8
     username: root
@@ -47,4 +49,6 @@ resourceLocations:
   uploadPath: D:/uploaded_files/ #文件上传路径
 resourceHandler:
   pathHandler: /files/ #文件访问映射路径
-  
+tcp:
+  date:
+    patterns: yyyy-MM-dd HH:mm:ss,yyyy-MM-dd,yyyy-MM-dd HH:mm:ss.SSS
